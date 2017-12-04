@@ -3,3 +3,6 @@
 dwm
 *.orig
 *.rej
+
+config.h
+
