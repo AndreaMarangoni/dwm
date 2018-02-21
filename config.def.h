@@ -1,6 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 #define XF86MonBrightnessDown 0x1008ff03
 #define XF86MonBrightnessUp   0x1008ff02
+#define XF86AudioLowerVolume  0x1008ff11
+#define XF86AudioRaiseVolume  0x1008ff13
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -63,6 +65,8 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", "-e", "tmux", NULL };
 static const char *brightUpCmd[] = { "xbacklight", "+10", NULL };
 static const char *brightDownCmd[] = { "xbacklight", "-10", NULL };
+static const char *volupcmd[]      = { "amixer", "-q", "set", "Master", "5%+", NULL };
+static const char *voldncmd[]      = { "amixer", "-q", "set", "Master", "5%-", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -91,6 +95,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ 0,             XF86MonBrightnessUp,      spawn,          {.v = brightUpCmd } },
 	{ 0,             XF86MonBrightnessDown,    spawn,          {.v = brightDownCmd } },
+    { 0,             XF86AudioRaiseVolume,     spawn,          {.v = volupcmd } },
+    { 0,             XF86AudioLowerVolume,     spawn,          {.v = voldncmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
