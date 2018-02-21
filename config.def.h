@@ -1,4 +1,6 @@
 /* See LICENSE file for copyright and license details. */
+#define XF86MonBrightnessDown 0x1008ff03
+#define XF86MonBrightnessUp   0x1008ff02
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -40,8 +42,8 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[M]",      monocle },
-	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[]=",      tile },    /* first entry is default */
 };
 
 /* key definitions */
@@ -59,7 +61,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", "-e", "tmux", NULL };
-
+static const char *brightUpCmd[] = { "xbacklight", "+10", NULL };
+static const char *brightDownCmd[] = { "xbacklight", "-10", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -86,6 +89,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ 0,             XF86MonBrightnessUp,      spawn,          {.v = brightUpCmd } },
+	{ 0,             XF86MonBrightnessDown,    spawn,          {.v = brightDownCmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
